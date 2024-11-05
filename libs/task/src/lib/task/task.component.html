@@ -1,0 +1,8 @@
+<div class="container">
+  <div *ngFor="let task of tasks">
+      <div>{{ task.title }}</div>
+      <div>{{ task.description }}</div>
+      <button mat-button (click)="editTask(task)">Edit</button>
+      <button mat-button color="warn" (click)="deleteTask(task)">Delete</button>
+  </div>
+</div>
