@@ -17,10 +17,11 @@
     "paths": {
       "@angular-monorepo/orders": ["libs/orders/src/index.ts"],
       "@angular-monorepo/products": ["libs/products/src/index.ts"],
-      "@angular-monorepo/shared-ui": ["libs/shared/ui/src/index.ts"],
+      "@angular-monorepo/shared-task": ["libs/shared/ui/src/index.ts"],
       "@angular-monorepo/task": ["libs/task/src/index.ts"],
       "@angular-monorepo/task-form": ["libs/task-form/src/index.ts"],
-      "@angular-monorepo/task-list": ["libs/task-list/src/index.ts"]
+      "@angular-monorepo/task-list": ["libs/task-list/src/index.ts"],
+      "@angular-monorepo/tasks-feature": ["libs/tasks-feature/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

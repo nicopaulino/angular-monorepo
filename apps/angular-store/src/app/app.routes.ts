@@ -1,20 +1,9 @@
 import { Route } from '@angular/router';
-import { NxWelcomeComponent } from './nx-welcome.component';
 
 export const appRoutes: Route[] = [
   {
     path: '',
-    component: NxWelcomeComponent,
+    loadComponent: () => import('@angular-monorepo/tasks-feature').then((m) => m.TasksFeatureComponent),
     pathMatch: 'full',
-  },
-  {
-    path: 'products',
-    loadComponent: () =>
-      import('@angular-monorepo/products').then((m) => m.ProductsComponent),
-  },
-  {
-    path: 'orders',
-    loadComponent: () =>
-      import('@angular-monorepo/orders').then((m) => m.OrdersComponent),
-  },
+  }
 ];

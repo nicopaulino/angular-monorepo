@@ -1,0 +1,12 @@
+<mat-toolbar color="primary">
+  <span>Task Management</span>
+  <span class="spacer"></span>
+  <button mat-button (click)="toggleForm()">Add Task</button>
+  <!-- <button mat-button>Add Task</button> -->
+</mat-toolbar>
+
+<lib-task-list></lib-task-list>
+
+<div *ngIf="showForm">
+  <lib-task-form></lib-task-form>
+</div>

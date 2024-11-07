@@ -1,1 +1,13 @@
-<p>task-form works!</p>
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Task Title</mat-label>
+    <input matInput formControlName="title" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Task Description</mat-label>
+    <textarea matInput formControlName="description" required></textarea>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Save Task</button>
+</form>
