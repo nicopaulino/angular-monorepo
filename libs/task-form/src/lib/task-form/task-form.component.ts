@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ITask } from '@angular-monorepo/shared-task';
+import { addTask, ITask, TaskState, updateTask } from '@angular-monorepo/shared-task';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Store } from '@ngrx/store';
-import { addTask, TaskState, updateTask } from '@angular-monorepo/task';
 
 @Component({
   selector: 'lib-task-form',
@@ -33,10 +32,12 @@ export class TaskFormComponent implements OnInit {
 
   onSubmit() {
     if (this.task) {
+      console.log('exisiting task');
       // Update existing task
       const updatedTask: ITask = { ...this.task, ...this.taskForm.value };
       this.store.dispatch(updateTask({ task: updatedTask }));
     } else {
+      console.log('new task');
       // Create new task
       const newTask: ITask = {
         id: Date.now(), // Simple ID generation

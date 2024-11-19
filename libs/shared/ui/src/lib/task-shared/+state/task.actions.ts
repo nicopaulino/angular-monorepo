@@ -1,5 +1,5 @@
-import { ITask } from '@angular-monorepo/shared-task';
 import { createAction, props } from '@ngrx/store';
+import { ITask } from '../../../task.model';
 
 export const initTask = createAction('[Task Page] Init');
 export const loadTasks = createAction('[Task] Load Tasks');

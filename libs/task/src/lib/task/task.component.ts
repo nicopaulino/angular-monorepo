@@ -1,16 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ITask } from '@angular-monorepo/shared-task';
+import { addTask, deleteTask, ITask, selectAllTasks, TaskState, updateTask } from '@angular-monorepo/shared-task';
 import { Store } from '@ngrx/store';
-import { selectAllTasks } from './+state/task.selectors';
-import { TaskState } from './+state/task.reducer';
-import { addTask, deleteTask } from './+state/task.actions';
-// import { TaskFormComponent } from '@angular-monorepo/task-form';
+import { TaskFormComponent } from '@angular-monorepo/task-form';
 
 @Component({
   selector: 'lib-task',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TaskFormComponent],
   templateUrl: './task.component.html',
   styleUrl: './task.component.css',
 })
@@ -27,11 +24,8 @@ export class TaskComponent implements OnInit {
 
   editTask(task: ITask) {
     this.showForm = true;
-    console.log('editTask', task);
-    console.log('showForm', this.showForm);
-    // this.selectedTask = task;
-    // this.store.dispatch(updateTask({ task }));
-    // console.log('editTask', task);
+    this.selectedTask = task;
+    this.store.dispatch(updateTask({ task }));
   }
 
   addTask() {

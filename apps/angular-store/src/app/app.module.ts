@@ -5,7 +5,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
-import { taskReducer } from '@angular-monorepo/task';
+import { taskReducer } from '@angular-monorepo/shared-task';
 
 @NgModule({
   declarations: [AppComponent],

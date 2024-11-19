@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { loadTasksSuccess, addTask, updateTask, deleteTask } from './task.actions';
-import { ITask } from '@angular-monorepo/shared-task';
+import { ITask } from '../../../task.model';
 
 export interface TaskState {
   tasks: ITask[];
@@ -28,7 +28,8 @@ export const taskReducer = createReducer(
   initialState,
   on(loadTasksSuccess, (state, { tasks }) => ({ ...state, tasks })),
   on(addTask, (state, { task }) => ({ ...state, tasks: [...state.tasks, task] })),
-  on(updateTask, (state, { task }) => ({
+  on(updateTask, (state, { task }) => (
+    console.log('updateTask hit'),{
     ...state,
     tasks: state.tasks.map(t => (t.id === task.id ? task : t))
   })),
