@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { addTask, deleteTask, ITask, selectAllTasks, TaskState, updateTask } from '@angular-monorepo/shared-task';
 import { Store } from '@ngrx/store';
 import { TaskFormComponent } from '@angular-monorepo/task-form';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'lib-task',
   standalone: true,
-  imports: [CommonModule, TaskFormComponent],
+  imports: [CommonModule, TaskFormComponent, MatTableModule],
   templateUrl: './task.component.html',
   styleUrl: './task.component.css',
 })
@@ -15,6 +16,8 @@ export class TaskComponent implements OnInit {
   tasks: ITask[] = [];
   selectedTask?: ITask;
   @Input() showForm = false;
+  displayedColumns: string[] = ['id', 'title', 'description', 'actions'];
+
 
   constructor(private store: Store<TaskState>) {}
 
