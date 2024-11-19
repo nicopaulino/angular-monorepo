@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ITask, TaskService } from '@angular-monorepo/shared-task';
+import { ITask } from '@angular-monorepo/shared-task';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { Store } from '@ngrx/store';
+import { addTask, TaskState, updateTask } from '@angular-monorepo/task';
 
 @Component({
   selector: 'lib-task-form',
@@ -19,7 +21,7 @@ export class TaskFormComponent implements OnInit {
   taskForm!: FormGroup;
 
   constructor(private fb: FormBuilder,
-    private taskService: TaskService
+    private store: Store<TaskState>
   ) {}
 
   ngOnInit() {
@@ -33,14 +35,14 @@ export class TaskFormComponent implements OnInit {
     if (this.task) {
       // Update existing task
       const updatedTask: ITask = { ...this.task, ...this.taskForm.value };
-      this.taskService.updateTask(updatedTask);
+      this.store.dispatch(updateTask({ task: updatedTask }));
     } else {
       // Create new task
       const newTask: ITask = {
         id: Date.now(), // Simple ID generation
         ...this.taskForm.value,
       };
-      this.taskService.addTask(newTask);
+      this.store.dispatch(addTask({ task: newTask }));
     }
 
     this.taskForm.reset();

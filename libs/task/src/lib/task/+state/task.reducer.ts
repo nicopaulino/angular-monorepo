@@ -1,46 +1,36 @@
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { createReducer, on, Action } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
+import { loadTasksSuccess, addTask, updateTask, deleteTask } from './task.actions';
+import { ITask } from '@angular-monorepo/shared-task';
 
-import * as TaskActions from './task.actions';
-import { TaskEntity } from './task.models';
-
-export const TASK_FEATURE_KEY = 'task';
-
-export interface TaskState extends EntityState<TaskEntity> {
-  selectedId?: string | number; // which Task record has been selected
-  loaded: boolean; // has the Task list been loaded
-  error?: string | null; // last known error (if any)
-  title: string;
-  description: string;
+export interface TaskState {
+  tasks: ITask[];
 }
 
-export interface TaskPartialState {
-  readonly [TASK_FEATURE_KEY]: TaskState;
-}
+const initialState: TaskState = {
+  tasks: [{
+          id: 1,
+          title: 'Get groceries',
+          description: 'I need to go to Ralphs and get some groceries.',
+        },
+        {
+          id: 2,
+          title: 'Record Mixtape',
+          description: 'The people are waiting for some new Lil Pancake. Give the people what they want.',
+        },
+        {
+          id: 3,
+          title: 'Take a nap',
+          description: 'You deserve it.',
+        }]
+};
 
-export const taskAdapter: EntityAdapter<TaskEntity> =
-  createEntityAdapter<TaskEntity>();
-
-export const initialTaskState: TaskState = taskAdapter.getInitialState({
-  // set initial required properties
-  loaded: false,
-  title: 'Swaggggg Title',
-  description: 'Swag',
-});
-
-const reducer = createReducer(
-  initialTaskState,
-  on(TaskActions.initTask, (state) => ({
+export const taskReducer = createReducer(
+  initialState,
+  on(loadTasksSuccess, (state, { tasks }) => ({ ...state, tasks })),
+  on(addTask, (state, { task }) => ({ ...state, tasks: [...state.tasks, task] })),
+  on(updateTask, (state, { task }) => ({
     ...state,
-    loaded: false,
-    error: null,
+    tasks: state.tasks.map(t => (t.id === task.id ? task : t))
   })),
-  on(TaskActions.loadTaskSuccess, (state, { task }) =>
-    taskAdapter.setAll(task, { ...state, loaded: true })
-  ),
-  on(TaskActions.loadTaskFailure, (state, { error }) => ({ ...state, error }))
+  on(deleteTask, (state, { task }) => ({ ...state, tasks: state.tasks.filter(t => t.id !== task.id) }))
 );
-
-export function taskReducer(state: TaskState | undefined, action: Action) {
-  return reducer(state, action);
-}
