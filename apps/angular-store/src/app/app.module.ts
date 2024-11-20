@@ -5,7 +5,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
-import { taskReducer } from '@angular-monorepo/shared-task';
+import { TaskEffects, taskReducer, TaskService } from '@angular-monorepo/shared-task';
 
 @NgModule({
   declarations: [AppComponent],
@@ -13,9 +13,9 @@ import { taskReducer } from '@angular-monorepo/shared-task';
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     StoreModule.forRoot({tasks: taskReducer}),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([TaskEffects]),
   ],
-  providers: [],
+  providers: [TaskService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

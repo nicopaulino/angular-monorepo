@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { addTask, deleteTask, ITask, selectAllTasks, TaskState, updateTask } from '@angular-monorepo/shared-task';
-import { Store } from '@ngrx/store';
+import { ITask, TaskService } from '@angular-monorepo/shared-task';
 import { TaskFormComponent } from '@angular-monorepo/task-form';
 import { MatTableModule } from '@angular/material/table';
 
@@ -19,25 +18,26 @@ export class TaskComponent implements OnInit {
   displayedColumns: string[] = ['id', 'title', 'description', 'actions'];
 
 
-  constructor(private store: Store<TaskState>) {}
+  constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
-    this.store.select(selectAllTasks).subscribe(tasks => this.tasks = tasks);
-  }
+    this.taskService.getTasks().subscribe(tasks => this.tasks = tasks);
+    this.taskService.loadTasks();
+    }
 
   editTask(task: ITask) {
     this.showForm = true;
     this.selectedTask = task;
-    this.store.dispatch(updateTask({ task }));
+    this.taskService.updateTask(task);
   }
 
   addTask() {
-    this.store.dispatch(addTask({ task: { id: Date.now(), title: '', description: '' } }));
+    this.taskService.addTask({ id: Date.now(), title: '', description: '' });
     this.showForm = true;
   }
 
   deleteTask(task: ITask) {
-    this.store.dispatch(deleteTask({ task }));
+    this.taskService.deleteTask(task);
   }
 
   onFormSubmitted() {
