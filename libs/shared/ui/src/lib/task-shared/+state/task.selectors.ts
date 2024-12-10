@@ -4,3 +4,8 @@ import { TaskState } from './task.reducer';
 export const selectTaskState = createFeatureSelector<TaskState>('tasks');
 
 export const selectAllTasks = createSelector(selectTaskState, state => state.tasks);
+
+export const selectAllTaskIds = createSelector(selectTaskState, state => state.tasks.map(task => task.id));
+
+
+

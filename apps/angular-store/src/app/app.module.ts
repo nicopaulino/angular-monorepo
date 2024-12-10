@@ -14,6 +14,7 @@ import { TaskEffects, taskReducer, TaskService } from '@angular-monorepo/shared-
     RouterModule.forRoot(appRoutes),
     StoreModule.forRoot({tasks: taskReducer}),
     EffectsModule.forRoot([TaskEffects]),
+    // EffectsModule.forFeature([TaskEffects])
   ],
   providers: [TaskService],
   bootstrap: [AppComponent]
